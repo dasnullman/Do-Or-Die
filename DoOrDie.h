@@ -49,7 +49,7 @@ extern "C" {
 
 #endif // DO_OR_DIE_DONT_REPLACE_OR_KEYWORD
 
-static inline void die() {
+static FORCE_INLINE void die() {
 #ifdef DO_OR_DIE_CUSTOM_DIE_HANDLER
 	DO_OR_DIE_CUSTOM_DIE_HANDLER;
 	return;
@@ -72,4 +72,5 @@ static inline void die() {
 #endif
 
 #endif // DO_OR_DIE_H
+
 
