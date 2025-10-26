@@ -1,10 +1,32 @@
-// Copyright (C) 2024 Nullman.
+// Copyright (C) 2024-2025 Nullman.
 // This file is released under the GNU Lesser General Public License 2.1
 // You should've received a file titled LICENSE with this software
 // If not see the web version at: https://opensource.org/license/lgpl-2-1
 
 #ifndef DO_OR_DIE_H
 #define DO_OR_DIE_H
+
+#if defined(_MSC_VER) && _MSC_VER > 1400
+#pragma once // Doesn't matter on GCC, but header guards are slower on MSVC++. 
+#endif 
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+#ifdef __GNUC__
+#define FORCE_INLINE __attribute__((always_inline)) inline
+#endif
+
+#ifdef _MSC_VER
+#define FORCE_INLINE __forceinline
+#endif
+
+#ifdef __clang__
+#define FORCE_INLINE __attribute__((always_inline)) inline
+#endif
+
+#include <stdio.h>
 
 #if !defined(_INC_WINDOWS) && !defined(DO_OR_DIE_DONT_INCLUDE_WINDOWS) && defined(_WIN32)
 #include <Windows.h>
@@ -27,7 +49,7 @@
 
 #endif // DO_OR_DIE_DONT_REPLACE_OR_KEYWORD
 
-void die() {
+static inline void die() {
 #ifdef DO_OR_DIE_CUSTOM_DIE_HANDLER
 	DO_OR_DIE_CUSTOM_DIE_HANDLER;
 	return;
@@ -45,4 +67,9 @@ void die() {
 #endif // _WIN32
 }
 
+#if defined(__cplusplus)
+}
+#endif
+
 #endif // DO_OR_DIE_H
+
